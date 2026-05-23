@@ -3,198 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deniz'e Özel Sürpriz</title>
+    <title>Deniz'ime...</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ffe3e3, #fbc7d4);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a0813, #3a1123, #12030c);
+            font-family: 'Georgia', serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
-            color: #4a4a4a;
+            color: #fff1f3;
         }
 
-        .container {
+        /* Giriş Ekranı */
+        .intro-container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            max-width: 90%;
-            width: 400px;
+            padding: 40px 20px;
             z-index: 10;
-            transition: all 0.5s ease;
+            transition: opacity 1s ease;
+            max-width: 90%;
         }
 
-        h1 {
-            color: #ff4b5c;
-            font-size: 24px;
+        .intro-container h1 {
+            font-size: 28px;
+            color: #ff6584;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 101, 132, 0.5);
         }
 
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-            position: relative;
-            height: 50px;
-        }
-
-        button {
-            padding: 10px 25px;
-            font-size: 16px;
+        .start-btn {
+            background: linear-gradient(45deg, #ff4b5c, #ff6584);
+            color: white;
             border: none;
-            border-radius: 25px;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
             font-weight: bold;
+            box-shadow: 0 5px 20px rgba(255, 75, 92, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .btn-yes {
-            background-color: #ff4b5c;
-            color: white;
-        }
-
-        .btn-yes:hover {
-            background-color: #e03e4d;
+        .start-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(255, 75, 92, 0.6);
         }
 
-        .btn-no {
-            background-color: #a0a0a0;
-            color: white;
-            position: absolute;
+        /* Mektup Ekranı (Tam Ekran) */
+        .letter-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 40px 25px;
+            overflow-y: auto;
+            z-index: 5;
+            background: rgba(15, 3, 10, 0.6);
+            scroll-behavior: smooth;
         }
 
-        /* Kamera ve Sürpriz Ekranı */
-        .hidden {
-            display: none !important;
-        }
-
-        .camera-box {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border: 5px solid #ff4b5c;
-            overflow: hidden;
-            margin: 20px auto;
-            box-shadow: 0 5px 15px rgba(255, 75, 92, 0.3);
-            transform: scaleX(-1); /* Aynalama efekti */
-        }
-
-        video {
+        .letter-content {
+            max-width: 600px;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            text-align: center;
+            padding-bottom: 200px; /* Alttan boşluk ki rahat okunsun */
         }
 
-        /* Kalp Yağmuru Animasyonu */
+        /* Satır Stilleri */
+        .letter-paragraph {
+            font-size: 19px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+        }
+
+        .letter-paragraph.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .highlight {
+            color: #ff6584;
+            font-weight: bold;
+            font-size: 22px;
+            display: block;
+            margin: 15px 0;
+            text-shadow: 0 0 8px rgba(255, 101, 132, 0.3);
+        }
+
+        /* Kalp Yağmuru */
         .heart {
             position: absolute;
-            color: #ff4b5c;
-            font-size: 20px;
-            animation: fall linear forwards;
+            color: rgba(255, 75, 92, 0.4);
+            animation: floatUp linear forwards;
             z-index: 1;
             user-select: none;
+            pointer-events: none;
         }
 
-        @keyframes fall {
+        @keyframes floatUp {
             0% {
-                transform: translateY(-20px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
+                transform: translateY(105vh) translateX(0) scale(0.5);
                 opacity: 0;
             }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(50px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
-    <div id="questionScreen" class="container">
-        <h1>Deniz'e Küçük Bir Sürpriz ❤️</h1>
-        <p>Senin için hazırladığım bu sürprizi görmeye hazır mısın?</p>
-        <div class="btn-group">
-            <button class="btn-yes" onclick="startSurprise()">Evet!</button>
-            <button id="noBtn" class="btn-no" style="right: 50px;">Hayır</button>
-        </div>
+    <div id="introScreen" class="intro-container">
+        <h1>Deniz'im, Senin İçin Bir Sürprizim Var... ❤️</h1>
+        <p style="font-size: 16px; margin-bottom: 30px; color: #ccb3bc;">Gürültüden uzaklaş, arkana yaslan ve sadece ekrana odaklan.</p>
+        <button class="start-btn" onclick="startLetter()">Sürprizi Aç ✨</button>
     </div>
 
-    <div id="surpriseScreen" class="container hidden">
-        <h1>Gülüşünü Görmek İstedim! ✨</h1>
-        <p id="message">Şu an bu ekrana bakarken ne kadar harika göründüğünü bilmeni istedim.</p>
-        
-        <div class="camera-box">
-            <video id="webcam" autoplay playsinline></video>
-        </div>
-
-        <p style="font-style: italic; color: #ff4b5c; font-weight: bold;">İyi ki varsın! ❤️</p>
+    <div id="letterScreen" class="letter-container hidden">
+        <div class="letter-content" id="letterContent">
+            </div>
     </div>
 
-    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" loop></audio>
 
     <script>
-        // "Hayır" butonunun kaçma efekti
-        const noBtn = document.getElementById('noBtn');
-        noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        });
+        // Deniz için hazırlanan devasa, duygusal ve zamana yayılan metin arşivi.
+        // Her bir cümle belirli aralıklarla ekranda belirecek.
+        const paragraphs = [
+            "askiiuum bu sayfayı sadece senin için sana olan duygularımı kelimelere dökmek için hazırladım. İlk andan beri hayatımda değiştirdiğin o kadar çok şey var ki...",
+            "Seninle geçen her an, sanki dünyanın bütün gürültüsü susuyor ve geriye sadece senin o huzur veren sesin kalıyor. Hayatıma girdiğin günü düşünüyorum da, ne kadar şanslı olduğumu kelimelerle anlatmam imkansız.",
+            "<span class='highlight'>Sen benim hayatımın en güzel detayı, en parlak Deniz'isin.</span>",
+            "Bazen sadece durup gülüşünü izlemek, o an zamanı durdurabilmek istiyorum. Dünyadaki hiçbir şey senin o içten gelen, dünyayı güzelleştiren gülüşün kadar değerli olamaz benim için.",
+            "Bu sitenin her bir satırı, sana olan sevgimin küçük birer kanıtı. Şimdi arkana yaslan ve benimle bu uzun yolculuğa devam et, çünkü sana söylemek istediğim daha çok şey var...",
+            "Zaman akıp giderken, hayatın getirdiği tüm zorlukların arasında beni her zaman ayağa kaldıran, bana umut veren tek şey senin varlığın oldu. İyi ki yanımdasın, iyi ki benimlesin.",
+            "Seninle konuşurken, günün nasıl bittiğini, saatlerin nasıl akıp gittiğini hiç fark etmiyorum. Dünyanın en güzel sohbetleri, seninle sessizce kalabildiğim anlar oluyor.",
+            "Gözlerimi kapattığımda, geleceğe dair kurduğum her hayalin içinde en başköşede sen varsun. Seninle yürünecek yollar, yaşanacak upuzun bir hayat var önümüzde.",
+            "<span class='highlight'>Her gün bir önceki günden daha çok seviliyorsun, bunu sakın unutma.</span>",
+            "İnsan hayatta bir kez gerçekten bağlanır derler ya, ben o bağı senin gözlerinde gördüm. Seninle olan her şey o kadar saf ve o kadar gerçek ki...",
+            "Sırf senin yüzün gülsün, sırf sen mutlu ol diye dünyadaki her şeyi karşıma alabilirim. Senin bir tek damla gözyaşın, benim dünyamı karartmaya yeter.",
+            "Sana olan duygularım o kadar büyük ki, bazen göğsüme sığmıyor. Bu sayfayı okurken kalbinin nasıl çarptığını hissetmek isterdim. Tıpkı benim seni düşünürken çarptığı gibi.",
+            "Seninle paylaştığımız en küçük bir anı bile hafızamda altın bir madalyon gibi saklıyorum. Seninle geçen hiçbir saniye boşa gitmiş sayılmaz benim için.",
+            "Hayat bazen yorucu ve karmaşık olabiliyor, farkındayım. Ama elini tuttuğum an, o karmaşanın yerini derin bir sakinlik alıyor. Sen benim güvenli limanımsın.",
+            "<span class='highlight'>İyi ki doğdun, iyi ki varsın ve iyi ki benim denizimsin...</span>",
+            "Bu satırlar bittiğinde bile sana olan sevgim hiç bitmeyecek. Her nefeste, her adımda seninle olmaya, seni her şeyden çok korumaya ve sevmeye devam edeceğim. Seni çok seviyorum sevgilim..."
+        ];
 
-        // Sürprizi Başlatma Fonksiyonu
-        function startSurprise() {
-            document.getElementById('questionScreen').classList.add('hidden');
-            document.getElementById('surpriseScreen').classList.remove('hidden');
+        let currentIndex = 0;
+        const letterContent = document.getElementById('letterContent');
+        const letterScreen = document.getElementById('letterScreen');
+
+        function startLetter() {
+            document.getElementById('introScreen').classList.add('hidden');
+            letterScreen.classList.remove('hidden');
             
-            // Müzik Çal
+            // Müziği oynat
             const music = document.getElementById('bgMusic');
-            music.play().catch(e => console.log("Müzik otomatik başlatılamadı, tarayıcı engelledi."));
+            music.play().catch(e => console.log("Müzik engellendi, manuel izin gerekiyor."));
 
-            // Kalp Yağmurunu Başlat
-            setInterval(createHeart, 300);
+            // Kalpleri başlat
+            setInterval(createHeart, 400);
 
-            // Canlı Kamera Görüntüsünü Aç (Sadece ekranda göstermek için)
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    const video = document.getElementById('webcam');
-                    video.srcObject = stream;
-                })
-                .catch(function(err) {
-                    console.log("Kamera açılamadı veya izin verilmedi: ", err);
-                });
-            }
+            // İlk satırı hemen göster
+            showNextParagraph();
+
+            // Gerçek zamanlı akış: Her 35-40 saniyede bir yeni paragraf ekle (Toplamda uzun sürecek bir deneyim)
+            // Deniz okudukça sayfa aşağıya doğru uzayacak, bitiremeyecek.
+            const textInterval = setInterval(() => {
+                if (currentIndex < paragraphs.length) {
+                    showNextParagraph();
+                } else {
+                    clearInterval(textInterval);
+                }
+            }, 35000); // Her satır arası 35 saniye bekleme (Zamana yayılması için)
         }
 
-        // Kalp Oluşturma Fonksiyonu
+        function showNextParagraph() {
+            if (currentIndex >= paragraphs.length) return;
+
+            const p = document.createElement('div');
+            p.classList.add('letter-paragraph');
+            p.innerHTML = paragraphs[currentIndex];
+            letterContent.appendChild(p);
+
+            // Yumuşak geçişle ekrana getir
+            setTimeout(() => {
+                p.classList.add('reveal');
+                // Sayfayı otomatik olarak yeni eklenen yazıya doğru kaydır
+                letterScreen.scrollTo({
+                    top: letterScreen.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
+
+            currentIndex++;
+        }
+
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            heart.innerHTML = ['❤️', '💖', '💝', '💕'][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
             document.body.appendChild(heart);
 
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => { heart.remove(); }, 10000);
         }
     </script>
 </body>
-      </html>
-
+</html>
