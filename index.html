@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İki Kişilik Özel Oda 🔒</title>
+    <title>Sadece İkimize Özel 🔒</title>
     <style>
         * { box-sizing: border-box; user-select: none; }
         body {
@@ -33,7 +33,7 @@
             position: relative;
         }
 
-        /* Şifre Giriş Alanı */
+        /* Şifre Ekranı */
         .password-box {
             display: flex;
             flex-direction: column;
@@ -52,10 +52,6 @@
             width: 80%;
             outline: none;
         }
-        .password-input:focus {
-            border-color: #e0b41a;
-            box-shadow: 0 0 10px rgba(224, 180, 26, 0.3);
-        }
         .error-msg {
             color: #ff4a4a;
             font-size: 14px;
@@ -63,63 +59,16 @@
             min-height: 20px;
         }
 
-        /* Online Panel */
-        .online-panel {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(9, 2, 13, 0.8);
-            border: 1px solid #57525d;
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        .player {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: bold;
-        }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: #2ec4b6;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px #2ec4b6;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.7; }
-        }
-
-        .live-chat-notify {
-            background: rgba(224, 180, 26, 0.15);
-            border: 1px solid #e0b41a;
-            border-radius: 10px;
-            padding: 8px 12px;
-            font-size: 14px;
-            margin-bottom: 15px;
-            color: #e0b41a;
-            font-style: italic;
-            min-height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .game-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             border-bottom: 1px solid #57525d;
             padding-bottom: 8px;
             margin-bottom: 15px;
             color: #8c8294;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         h1 {
@@ -136,9 +85,10 @@
             color: #d1cbd6;
         }
 
+        /* Oyun 1: Canavar Alanı */
         .game-area {
             width: 100%;
-            height: 230px;
+            height: 240px;
             background: rgba(9, 2, 13, 0.6);
             border: 1px dashed #e0b41a;
             border-radius: 15px;
@@ -146,7 +96,6 @@
             overflow: hidden;
             margin-bottom: 20px;
         }
-
         .monster {
             font-size: 38px;
             position: absolute;
@@ -154,27 +103,16 @@
             transition: transform 0.1s ease;
         }
 
-        /* Fotoğraf Albümü Tasarımı */
-        .photo-gallery {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 0 auto 20px auto;
-            flex-wrap: wrap;
+        /* Oyun 2: Kalp Tıklama Alanı */
+        .heart-target {
+            font-size: 50px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 20px 0;
+            animation: beat 0.6s infinite alternate;
         }
-        .photo-frame {
-            width: 140px;
-            height: 140px;
-            border-radius: 15px;
-            border: 3px solid #e0b41a;
-            box-shadow: 0 0 15px rgba(224, 180, 26, 0.5);
-            overflow: hidden;
-            background: #120c16;
-        }
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        @keyframes beat {
+            to { transform: scale(1.2); }
         }
 
         button {
@@ -196,9 +134,11 @@
         }
 
         .highlight { color: #e0b41a; font-weight: bold; }
-        .heart {
+        
+        /* Arka Plan Kalpleri */
+        .heart-bg {
             position: absolute;
-            color: rgba(224, 180, 26, 0.3);
+            color: rgba(224, 180, 26, 0.25);
             animation: floatUp linear forwards;
             z-index: 1;
             pointer-events: none;
@@ -214,126 +154,97 @@
 <body>
 
     <div id="passwordScreen" class="container">
-        <h1>Güvenli Giriş Paneli 🔑</h1>
-        <p style="font-size: 14px; color: #8c8294;">Bu odaya sadece sistem kurucuları erişebilir. Giriş şifresini yazın hatunum:</p>
+        <h1>Giriş Paneli 🔑</h1>
+        <p style="font-size: 14px; color: #8c8294;">Bu özel alana erişmek için lütfen giriş şifresini yaz hatunum:</p>
         <div class="password-box">
             <input type="password" id="sitePass" class="password-input" placeholder="******" maxlength="6">
             <div id="errorArea" class="error-msg"></div>
-            <button onclick="checkPassword()">Sisteme Giriş Yap 🔓</button>
+            <button onclick="checkPassword()">Giriş Yap 🔓</button>
         </div>
     </div>
 
     <div id="introScreen" class="container hidden">
-        <div class="online-panel">
-            <div class="player"><span class="status-dot"></span> Hani (Kurucu)</div>
-            <div class="player" style="color: #8c8294;"> Deniz (Bekleniyor...)</div>
-        </div>
-        <h1>Deniz & Hani Online Lobisi 🎮</h1>
-        <p>Hatunum, seninle aynı anda oynayabileceğimiz, 5 bölümlük çok özel bir aşk odası kurdum. Canavarları avlayıp benimle ortak zafere ulaşmaya hazır mısın karıcım?</p>
-        <button onclick="startGame()">Odayı Başlat Yavrum ⚡</button>
+        <h1>Aşk Odasına Hoş Geldin Hatunum 💛</h1>
+        <p>Senin için her aşamasında kalbimin derinliklerinden gelen sözlerin saklı olduğu 5 bölümlük minik bir macera hazırladım. Canavarları avlayıp ödüllerini toplamaya hazır mısın karıcım?</p>
+        <button onclick="startGame1()">Oyunu Başlat Yavrum ⚡</button>
     </div>
 
     <div id="gameScreen" class="container hidden">
-        <div class="online-panel">
-            <div class="player"><span class="status-dot"></span> Hani: Çevrimiçi 👑</div>
-            <div class="player"><span class="status-dot"></span> Deniz: Çevrimiçi ❤️</div>
-        </div>
-        <div class="live-chat-notify" id="liveChat">
-            Hani odaya bağlandı. "Seni bekliyorum hatunum..."
-        </div>
         <div class="game-header">
             <span id="levelDisplay">BÖLÜM: 1 / 5</span>
-            <span id="scoreDisplay">HEDEF: 0 / 3</span>
+            <span id="scoreDisplay" style="margin-left: auto;">HEDEF: 0 / 3</span>
         </div>
         <div class="game-area" id="gameArea"></div>
     </div>
 
     <div id="rewardScreen" class="container hidden">
-        <div class="online-panel">
-            <div class="player"><span class="status-dot"></span> Hani 👑</div>
-            <div class="player"><span class="status-dot"></span> Deniz ❤️</div>
-        </div>
         <div class="game-header">
-            <span style="color: #e0b41a;">BÖLÜM GEÇİLDİ! 🏆</span>
-            <span>PING: 14ms</span>
+            <span style="color: #e0b41a;">AŞAMA TAMAMLANDI! 🏆</span>
         </div>
-        
-        <div id="finalPhotoGallery" class="photo-gallery hidden">
-            <div class="photo-frame"><img src="deniz1.jpg" alt="Deniz 1"></div>
-            <div class="photo-frame"><img src="deniz2.jpg" alt="Deniz 2"></div>
-        </div>
-
         <h1 id="rewardTitle">Bölüm Ödülü 🎉</h1>
         <p id="rewardText">İltifat...</p>
-        <button id="nextLevelBtn" onclick="startNextLevel()">Sonraki Bölümü Başlat ⚔️</button>
+        <button id="nextLevelBtn" onclick="startNextLevel()">Sonraki Bölüme Geç ⚔️</button>
     </div>
 
-    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <div id="game2IntroScreen" class="container hidden">
+        <h1>Tebrikler Şampiyon! 👑</h1>
+        <p>İlk oyunu kusursuz bitirdin ve tüm övgüleri topladın sevgilim. Ama macera burada bitmiyor! Şimdi seninle **ikinci bir oyuna** geçiyoruz: <br><span class="highlight">Kalbimi Koruma Testi!</span></p>
+        <button onclick="startGame2()">İkinci Oyuna Başla 🔥</button>
+    </div>
+
+    <div id="game2Screen" class="container hidden">
+        <div class="game-header">
+            <span>İKİNCİ OYUN: KALBİMİ BESLE ❤️</span>
+        </div>
+        <p style="font-size: 15px; color: #8c8294;">Ekranda büyüyen kalbe üst üste tıklayarak onu sevginle doldur sevgilim!</p>
+        <div class="heart-target" id="heartTarget" onclick="clickHeart()">❤️</div>
+        <div id="game2Score" style="font-weight: bold; color: #e0b41a;">Tıklama: 0 / 10</div>
+    </div>
+
+    <div id="finalScreen" class="container hidden">
+        <h1>Sonsuz Aşkın Kazananı Deniz! 🏆💛</h1>
+        <p>Tüm oyunları, tüm engelleri sevginle eritip geçtin canım karıcım. Sen bu evrende gördüğüm en kusursuz, en asil ve en güzel kadınısın. Benim yavrum, hatunum, her şeyimsin. Seni her saniye, her nefeste daha çok seviyorum ömrüm. İyi ki benimsin, iyi ki hayatımdasın... 💜</p>
+        <button onclick="location.reload()">Odayı Yeniden Kilitle 🔒</button>
+    </div>
 
 <script>
-    // Şifre Girişini Tetikleyen Kusursuz Fonksiyon
+    // Şifre Kontrolü
     function checkPassword() {
         const input = document.getElementById('sitePass').value.trim();
         const errorArea = document.getElementById('errorArea');
-        
         if (input === "990009") {
             document.getElementById('passwordScreen').classList.add('hidden');
             document.getElementById('introScreen').classList.remove('hidden');
+            setInterval(createHeartBg, 350); // Kalp animasyonunu başlat
         } else {
-            errorArea.innerHTML = "❌ Hatalı Şifre! Erişim Reddedildi.";
+            errorArea.innerHTML = "❌ Hatalı Şifre! Giriş Engellendi.";
             document.getElementById('sitePass').value = "";
         }
     }
 
-    // 5 Bölümlük İltifatlar
+    // Her Tek Tek Bölüm Bittiğinde Yağdırılacak Ağır İltifatlar
     const levelRewards = [
-        "1. Bölümü Uçurdun Hatunum! Bak Hani yan odadan sana ne mesaj atmış: Sen hayatıma girdiğin günden beri kalbimin tek sahibisin karıcım. Bu ortak ömürlük bağımız hiç kopmasın yavrum.",
-        "2. Bölümü De Beraber Kazandık! Harikasın sevgilim. Hani şu an ekran başında senin o tatlı gülüşünü düşünüp eriyor. Dünyadaki bütün zaferler, bütün oyunlar senin o tek bir gülüşünün yanında bomboş kalır hatunum.",
-        "3. Bölüm Tamam! Hani'den sana canlı bir fısıltı var: 'Sen uzağımda kalınca bu hayat oyunu bana o kadar zor geliyor ki yavrum... İçim daralıyor, sensiz her saniye tıkanıp kalıyorum, seni çok özlüyorum sevgilim.'",
-        "4. Bölümü De Dağıttın! Ödülün: Dünyanın en büyüleyici, en güzel gözlerine sahip kadını sensin karıcım. O gözlerine her baktığımda içimi apayrı devasa bir huzur, tarifsiz bir mutluluk kaplıyor hatunum. Son bir oda kaldı!",
-        "🏆 ŞAMPİYON OLDUN VE ODAYI FETHETTİN! <span class='highlight'>Seni her şeyden, herkesten çok seviyorum Deniz'im...</span> Sen benim bu evrende gördüğüm en kusursuz, en güzel kadınısın. Benim yavrum, hatunum, karıcım, hayatımın tek anlamı ve gerçeğisin. İyi ki benimsin, iyi ki seninleyim ömrüm. Bu ortak aşk hikayemiz sonsuza kadar sürecek... 💛💜"
-    ];
-
-    const chatMessages = [
-        "Hani: 'Hadi hatunum patlat canavarları, sana güveniyorum! 🔥'",
-        "Hani: 'Karıcım ellerine sağlık, harika oynuyorsun... 😍'",
-        "Hani: 'Sen canavarları yok ederken ben sadece seni izliyorum yavrum... 👑'",
-        "Hani: 'Dünyanın en tatlı oyuncusu benim karım olmuş... 🍯'",
-        "Hani: 'Harika gidiyorsun ömrüm, az kaldı şampiyonuz! ⚡'",
-        "Hani: 'Hani şu an seni çok ama çok özlediğini söylüyor... 🥺'"
+        "Muazzamsın Hatunum! İlk adımı harika attın. Sen hayatıma girdiğin günden beri kalbimin tek sahibisin karıcım. Bu ömürlük bağımız hiç kopmasın, senin o güzel varlığın benden hiç eksilmesin yavrum.",
+        "Harikasın Sevgilim, 2. Bölüm de darmadağın oldu! Şu an senin o tatlı halini düşünüp içim eriyor. Dünyadaki bütün zaferler, bütün başarılar senin o tek bir gülüşünün yanında bomboş kalır hatunum.",
+        "3. Bölüm Bitti, Sevgim Çığ Gibi Büyüyor! Sen uzağımda kalınca bu hayat bana o kadar zor geliyor ki yavrum... İçim daralıyor, sensiz her saniye tıkanıp kalıyorum, seni deliler gibi özlüyorum sevgilim.",
+        "Aman Tanrım, 4. Bölüm de Geçildi! Ödülün: Dünyanın en büyüleyici, en derin gözlerine sahip kadını sensin karıcım. O gözlerine her baktığımda içimi apayrı devasa bir huzur, tarifsiz bir mutluluk kaplıyor hatunum. Son bir oda kaldı!",
+        "İşte Bu Kadar! 5. Bölümü de bitirdin ve ilk oyunu şampiyon tamamladın Deniz'im... Sen benim bu evrendeki en büyük şansım, hayatımın tek anlamı ve gerçeğisin canım hatunum. Şimdi ikinci oyuna hazır mısın?"
     ];
 
     let currentLevel = 0;
     let currentScore = 0;
     let targetScore = 3;
     let gameLoopInterval;
-    let chatInterval;
     const monstersPool = ['👾', '🐉', '👻', '👹', '🛸'];
 
-    function startGame() {
+    // OYUN 1 BAŞLATMA
+    function startGame1() {
         document.getElementById('introScreen').classList.add('hidden');
         document.getElementById('gameScreen').classList.remove('hidden');
-        
-        setInterval(createHeart, 350);
-        
-        const music = document.getElementById('bgMusic');
-        if (music) music.play().catch(e => {});
-
-        clearInterval(chatInterval);
-        chatInterval = setInterval(() => {
-            const chatBox = document.getElementById('liveChat');
-            if (chatBox) {
-                chatBox.innerHTML = "Hani yazıyor...";
-                setTimeout(() => {
-                    chatBox.innerHTML = chatMessages[Math.floor(Math.random() * chatMessages.length)];
-                }, 1300);
-            }
-        }, 6000);
-
-        initLevel();
+        initLevel1();
     }
 
-    function initLevel() {
+    function initLevel1() {
         currentScore = 0;
         targetScore = 3 + currentLevel; 
         
@@ -342,7 +253,7 @@
         document.getElementById('gameArea').innerHTML = '';
         
         clearInterval(gameLoopInterval);
-        const spawnSpeed = Math.max(900 - (currentLevel * 100), 400);
+        const spawnSpeed = Math.max(900 - (currentLevel * 100), 450);
         gameLoopInterval = setInterval(spawnMonster, spawnSpeed);
         spawnMonster();
     }
@@ -367,7 +278,7 @@
             
             if (currentScore >= targetScore) {
                 clearInterval(gameLoopInterval);
-                setTimeout(showReward, 400);
+                setTimeout(showReward, 300);
             }
         };
 
@@ -380,48 +291,65 @@
 
     function showReward() {
         document.getElementById('gameScreen').classList.add('hidden');
-        const rewardScreen = document.getElementById('rewardScreen');
-        rewardScreen.classList.remove('hidden');
+        document.getElementById('rewardScreen').classList.remove('hidden');
         
-        const photoGallery = document.getElementById('finalPhotoGallery');
+        document.getElementById('rewardTitle').innerHTML = `Bölüm ${currentLevel + 1} Zaferi! ✨`;
+        document.getElementById('rewardText').innerHTML = levelRewards[currentLevel];
 
         if (currentLevel === 4) {
-            document.getElementById('rewardTitle').innerHTML = `🏆 OYUN BİTTİ, ŞAMPİYON DENİZ! 🏆`;
-            photoGallery.classList.remove('hidden');
-            document.getElementById('nextLevelBtn').innerHTML = "Odayı Yeniden Başlat Karıcım 🔄";
+            document.getElementById('nextLevelBtn').innerHTML = "Yeni Oyuna Geçiş Yap 🚀";
         } else {
-            document.getElementById('rewardTitle').innerHTML = `Bölüm ${currentLevel + 1} Ortak Zafer! ✨`;
-            photoGallery.classList.add('hidden');
-            document.getElementById('nextLevelBtn').innerHTML = `${currentLevel + 2}. Odaya Geçiş İsteği Gönder ⚡`;
+            document.getElementById('nextLevelBtn').innerHTML = `Sonraki Bölümü Başlat ⚔️`;
         }
-        
-        document.getElementById('rewardText').innerHTML = levelRewards[currentLevel];
     }
 
     function startNextLevel() {
-        const music = document.getElementById('bgMusic');
-        if (music) music.play().catch(e => {});
-
+        document.getElementById('rewardScreen').classList.add('hidden');
+        
         if (currentLevel === 4) {
-            currentLevel = 0;
+            // İlk oyun bitti, ikinci oyunun giriş ekranına geç
+            document.getElementById('game2IntroScreen').classList.remove('hidden');
         } else {
             currentLevel++;
+            document.getElementById('gameScreen').classList.remove('hidden');
+            initLevel1();
         }
-        
-        document.getElementById('rewardScreen').classList.add('hidden');
-        document.getElementById('gameScreen').classList.remove('hidden');
-        initLevel();
     }
 
-    function createHeart() {
+    // OYUN 2 BAŞLATMA
+    let game2Clicks = 0;
+    const game2TargetClicks = 10;
+
+    function startGame2() {
+        document.getElementById('game2IntroScreen').classList.add('hidden');
+        document.getElementById('game2Screen').classList.remove('hidden');
+    }
+
+    function clickHeart() {
+        game2Clicks++;
+        document.getElementById('game2Score').innerHTML = `Tıklama: ${game2Clicks} / ${game2TargetClicks}`;
+        
+        // Her tıklandığında kalbi rastgele hafifçe oynat ve büyüt
+        const heart = document.getElementById('heartTarget');
+        heart.style.transform = `scale(${1 + (game2Clicks * 0.1)})`;
+
+        if (game2Clicks >= game2TargetClicks) {
+            setTimeout(() => {
+                document.getElementById('game2Screen').classList.add('hidden');
+                document.getElementById('finalScreen').classList.remove('hidden');
+            }, 300);
+        }
+    }
+
+    // Arka Plandaki Uçan Kalpler
+    function createHeartBg() {
         const heart = document.createElement('div');
-        heart.classList.add('heart');
+        heart.classList.add('heart-bg');
         heart.innerHTML = ['💛', '💜', '✨', '👑'][Math.floor(Math.random() * 4)];
         heart.style.left = Math.random() * 100 + 'vw';
         heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
         heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
         document.body.appendChild(heart);
-
         setTimeout(() => { heart.remove(); }, 6000);
     }
 </script>
