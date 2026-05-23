@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deniz'ime...</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1a0813, #3a1123, #12030c);
+            background: linear-gradient(135deg, #12030c, #2b0b1a, #0f0208);
             font-family: 'Georgia', serif;
             display: flex;
             justify-content: center;
@@ -21,95 +19,82 @@
             color: #fff1f3;
         }
 
-        /* Giriş Ekranı */
-        .intro-container {
+        .container {
             text-align: center;
-            padding: 40px 20px;
-            z-index: 10;
-            transition: opacity 1s ease;
+            padding: 35px 25px;
+            background: rgba(20, 5, 13, 0.75);
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(255, 75, 92, 0.15);
+            backdrop-filter: blur(15px);
             max-width: 90%;
+            width: 480px;
+            z-index: 10;
+            border: 1px solid rgba(255, 101, 132, 0.2);
+            transition: all 0.5s ease;
         }
 
-        .intro-container h1 {
-            font-size: 28px;
+        h1 {
+            font-size: 26px;
             color: #ff6584;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 101, 132, 0.5);
+            text-shadow: 0 0 10px rgba(255, 101, 132, 0.4);
         }
 
-        .start-btn {
-            background: linear-gradient(45deg, #ff4b5c, #ff6584);
-            color: white;
-            border: none;
-            padding: 15px 40px;
+        p {
             font-size: 18px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(255, 75, 92, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .start-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 25px rgba(255, 75, 92, 0.6);
-        }
-
-        /* Mektup Ekranı (Tam Ekran) */
-        .letter-container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 40px 25px;
-            overflow-y: auto;
-            z-index: 5;
-            background: rgba(15, 3, 10, 0.6);
-            scroll-behavior: smooth;
-        }
-
-        .letter-content {
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-            padding-bottom: 200px; /* Alttan boşluk ki rahat okunsun */
-        }
-
-        /* Satır Stilleri */
-        .letter-paragraph {
-            font-size: 19px;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-            letter-spacing: 0.5px;
-        }
-
-        .letter-paragraph.reveal {
-            opacity: 1;
-            transform: translateY(0);
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: #ffe4e8;
         }
 
         .highlight {
-            color: #ff6584;
+            color: #ff4b5c;
             font-weight: bold;
-            font-size: 22px;
+            font-size: 20px;
             display: block;
             margin: 15px 0;
-            text-shadow: 0 0 8px rgba(255, 101, 132, 0.3);
         }
 
-        /* Kalp Yağmuru */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff4b5c, #ff6584);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 75, 92, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 75, 92, 0.5);
+        }
+
+        button.alt-btn {
+            background: linear-gradient(45deg, #4a1525, #6b2138);
+            border: 1px solid rgba(255, 101, 132, 0.3);
+        }
+
+        .progress-bar {
+            font-size: 13px;
+            color: #a68590;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Kalp Efekti */
         .heart {
             position: absolute;
-            color: rgba(255, 75, 92, 0.4);
+            color: rgba(255, 75, 92, 0.35);
             animation: floatUp linear forwards;
             z-index: 1;
             user-select: none;
@@ -117,125 +102,93 @@
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(105vh) translateX(0) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-10vh) translateX(50px) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(30px) scale(1.2); opacity: 0; }
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div id="introScreen" class="intro-container">
-        <h1>Deniz'im, Senin İçin Bir Sürprizim Var... ❤️</h1>
-        <p style="font-size: 16px; margin-bottom: 30px; color: #ccb3bc;">Gürültüden uzaklaş, arkana yaslan ve sadece ekrana odaklan.</p>
-        <button class="start-btn" onclick="startLetter()">Sürprizi Aç ✨</button>
+    <div id="introScreen" class="container">
+        <h1>Deniz'im... ❤️</h1>
+        <p>Senin için kalbimden gelen küçük bir yolculuk hazırladım hatunum. Sonuna kadar gitmeye hazır mısın?</p>
+        <button onclick="startStory()">Sürprizi Başlat karıcım ✨</button>
     </div>
 
-    <div id="letterScreen" class="letter-container hidden">
-        <div class="letter-content" id="letterContent">
-            </div>
+    <div id="storyScreen" class="container hidden">
+        <h1 id="stageTitle">Aşama 1</h1>
+        <p id="stageText">Yazı buraya gelecek...</p>
+        <div class="btn-group">
+            <button id="btn1" onclick="nextStage(1)">Seçenek 1</button>
+            <button id="btn2" class="alt-btn" onclick="nextStage(2)">Seçenek 2</button>
+        </div>
+        <div class="progress-bar" id="progress">1 / 15</div>
     </div>
 
-    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" loop></audio>
+    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" loop></audio>
 
     <script>
-        // Deniz için hazırlanan devasa, duygusal ve zamana yayılan metin arşivi.
-        // Her bir cümle belirli aralıklarla ekranda belirecek.
-        const paragraphs = [
-            "askiiuum bu sayfayı sadece senin için sana olan duygularımı kelimelere dökmek için hazırladım. İlk andan beri hayatımda değiştirdiğin o kadar çok şey var ki...",
-            "Seninle geçen her an, sanki dünyanın bütün gürültüsü susuyor ve geriye sadece senin o huzur veren sesin kalıyor. Hayatıma girdiğin günü düşünüyorum da, ne kadar şanslı olduğumu kelimelerle anlatmam imkansız.",
-            "<span class='highlight'>Sen benim hayatımın en güzel detayı, en parlak Deniz'isin.</span>",
-            "Bazen sadece durup gülüşünü izlemek, o an zamanı durdurabilmek istiyorum. Dünyadaki hiçbir şey senin o içten gelen, dünyayı güzelleştiren gülüşün kadar değerli olamaz benim için.",
-            "Bu sitenin her bir satırı, sana olan sevgimin küçük birer kanıtı. Şimdi arkana yaslan ve benimle bu uzun yolculuğa devam et, çünkü sana söylemek istediğim daha çok şey var...",
-            "Zaman akıp giderken, hayatın getirdiği tüm zorlukların arasında beni her zaman ayağa kaldıran, bana umut veren tek şey senin varlığın oldu. İyi ki yanımdasın, iyi ki benimlesin.",
-            "Seninle konuşurken, günün nasıl bittiğini, saatlerin nasıl akıp gittiğini hiç fark etmiyorum. Dünyanın en güzel sohbetleri, seninle sessizce kalabildiğim anlar oluyor.",
-            "Gözlerimi kapattığımda, geleceğe dair kurduğum her hayalin içinde en başköşede sen varsun. Seninle yürünecek yollar, yaşanacak upuzun bir hayat var önümüzde.",
-            "<span class='highlight'>Her gün bir önceki günden daha çok seviliyorsun, bunu sakın unutma.</span>",
-            "İnsan hayatta bir kez gerçekten bağlanır derler ya, ben o bağı senin gözlerinde gördüm. Seninle olan her şey o kadar saf ve o kadar gerçek ki...",
-            "Sırf senin yüzün gülsün, sırf sen mutlu ol diye dünyadaki her şeyi karşıma alabilirim. Senin bir tek damla gözyaşın, benim dünyamı karartmaya yeter.",
-            "Sana olan duygularım o kadar büyük ki, bazen göğsüme sığmıyor. Bu sayfayı okurken kalbinin nasıl çarptığını hissetmek isterdim. Tıpkı benim seni düşünürken çarptığı gibi.",
-            "Seninle paylaştığımız en küçük bir anı bile hafızamda altın bir madalyon gibi saklıyorum. Seninle geçen hiçbir saniye boşa gitmiş sayılmaz benim için.",
-            "Hayat bazen yorucu ve karmaşık olabiliyor, farkındayım. Ama elini tuttuğum an, o karmaşanın yerini derin bir sakinlik alıyor. Sen benim güvenli limanımsın.",
-            "<span class='highlight'>İyi ki doğdun, iyi ki varsın ve iyi ki benim denizimsin...</span>",
-            "Bu satırlar bittiğinde bile sana olan sevgim hiç bitmeyecek. Her nefeste, her adımda seninle olmaya, seni her şeyden çok korumaya ve sevmeye devam edeceğim. Seni çok seviyorum sevgilim..."
-        ];
-
-        let currentIndex = 0;
-        const letterContent = document.getElementById('letterContent');
-        const letterScreen = document.getElementById('letterScreen');
-
-        function startLetter() {
-            document.getElementById('introScreen').classList.add('hidden');
-            letterScreen.classList.remove('hidden');
-            
-            // Müziği oynat
-            const music = document.getElementById('bgMusic');
-            music.play().catch(e => console.log("Müzik engellendi, manuel izin gerekiyor."));
-
-            // Kalpleri başlat
-            setInterval(createHeart, 400);
-
-            // İlk satırı hemen göster
-            showNextParagraph();
-
-            // Gerçek zamanlı akış: Her 35-40 saniyede bir yeni paragraf ekle (Toplamda uzun sürecek bir deneyim)
-            // Deniz okudukça sayfa aşağıya doğru uzayacak, bitiremeyecek.
-            const textInterval = setInterval(() => {
-                if (currentIndex < paragraphs.length) {
-                    showNextParagraph();
-                } else {
-                    clearInterval(textInterval);
-                }
-            }, 35000); // Her satır arası 35 saniye bekleme (Zamana yayılması için)
-        }
-
-        function showNextParagraph() {
-            if (currentIndex >= paragraphs.length) return;
-
-            const p = document.createElement('div');
-            p.classList.add('letter-paragraph');
-            p.innerHTML = paragraphs[currentIndex];
-            letterContent.appendChild(p);
-
-            // Yumuşak geçişle ekrana getir
-            setTimeout(() => {
-                p.classList.add('reveal');
-                // Sayfayı otomatik olarak yeni eklenen yazıya doğru kaydır
-                letterScreen.scrollTo({
-                    top: letterScreen.scrollHeight,
-                    behavior: 'smooth'
-                });
-            }, 100);
-
-            currentIndex++;
-        }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = ['❤️', '💖', '💝', '💕'][Math.floor(Math.random() * 4)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => { heart.remove(); }, 10000);
-        }
-    </script>
-</body>
-</html>
+        // 15 Aşamalı Özel Senaryo
+        const storyStages = [
+            {
+                text: "Hoş geldin yavrum. Bu ekrana baktığın an bil ki seni dünyadaki her şeyden çok düşünen biri var. İyi ki hayatımdasın karıcım. İlk adımı nasıl atmak istersin?",
+                b1: "Seni çok özledim, hemen devam et ❤️",
+                b2: "Beni ne kadar çok seviyorsun göster bakalım 💖"
+            },
+            {
+                text: "Sen benim hayatıma girdiğin günden beri her günüm seninle güzelleşiyor hatunum. Senin o tek bir gülüşün benim bütün dünyamı aydınlatmaya yetiyor.",
+                b1: "Ben yokken çok üzülüyorsun ama biliyorum... 🥺",
+                b2: "Sen benim tek gerçeğimsin yavrum, hep gül 😍"
+            },
+            {
+                text: "Haklısın... Sen yanımda olmayınca, sesini duymayınca içimde kocaman bir boşluk oluyor, çok üzülüyorum, nefes alamıyorum sanki sevgilim. Sen benim her şeyimsin.",
+                b1: "Kıyamam sana, üzülme kurban olduğum 🌹",
+                b2: "O zaman beni iltifatlara boğ karıcım! ✨"
+            },
+            {
+                text: "Dünyanın en güzel gözlerine sahip kadını... Sana bakmak, seni düşünmek bana bu hayattaki en büyük huzuru veriyor yavrum. Sen eşsiz bir detaysın.",
+                b1: "Sen benim kalbimin sahibisin hatunum 🥰",
+                b2: "Sensiz bir dakika bile eksik hissettiriyor... 😔"
+            },
+            {
+                text: "Sensiz geçen her saniye içimde buruk bir sızı kalıyor sevgilim. Sen benim hayatımın neşesisin, sen olmayınca ne oyunların tadı kalıyor ne de günlerin...",
+                b1: "Seni asla yalnız bırakmayacağım karıcım ❤️",
+                b2: "Bana biraz daha güzel sözler söyle yavrum 👑"
+            },
+            {
+                text: "Sen benim bu hayatta başıma gelen en güzel şanssın hatunum. Karakterinle, o güzel kalbinle beni kendine her gün yeniden aşık ediyorsun.",
+                b1: "Sen benim ömrümsün karıcım, hep öyle kalacaksın 💍",
+                b2: "Uzak kaldığımızda kalbim acıyor, üzülüyorum... 🖤"
+            },
+            {
+                text: "Biliyorum yavrum, mesafeler canımızı yaksa da, kalbimin her atışında senin adın fısıldıyor. Seni düşünmeden geçen tek bir anım bile yok.",
+                b1: "Bu sevgi bize her zorluğu aşırır sevgilim 💪",
+                b2: "Dünyanın en tatlı karısı kimmiş bakalım? 🍯"
+            },
+            {
+                text: "Tabii ki sensin hatunum! O tatlılığınla, bana olan bakışınla kalbimi eritiyorsun. Sen benim bu dünyadaki tek sığınağımsın yavrum.",
+                b1: "Seni herkesten, her şeyden sakınırım... 🛡️",
+                b2: "Sen yoksan her şey çok renksiz ve hüzünlü 😔"
+            },
+            {
+                text: "Sen yoksan sanki bütün şehir üstüme geliyor sevgilim, içim daralıyor. Senin varlığın bana öyle bir güç veriyor ki, sen benim dünyamsın.",
+                b1: "Sen benim başımın tacısın hatunum 👑",
+                b2: "Sonsuza kadar seninleyim karıcım diyebilir misin? ♾️"
+            },
+            {
+                text: "<span class='highlight'>Sonsuza kadar sadece seninleyim karıcım!</span> Gökyüzündeki tüm yıldızları toplasam, senin kalbinin parıltısı kadar güzel olamazlar yavrum.",
+                b1: "Bunu duymak kalbimi eritti sevgilim... ✨",
+                b2: "Bazen seni düşünürken hüzünleniyorum, yanımda ol diye... 💔"
+            },
+            {
+                text: "Gözlerinden akan tek bir damla hüzne dünyayı yakarım hatunum. Ben seni mutlu etmek için, senin yüzünü güldürmek için varım bu hayatta.",
+                b1: "İyi ki benim sevgilimsin, şansım benim 🍀",
+                b2: "Bana kural tanımaz bir iltifat et yavrum! 🔥"
+            },
+            {
+                text: "Sen bu evrenin en kusursuz, en büyüleyici kadınısın karıcım. Seninle olan
+        
