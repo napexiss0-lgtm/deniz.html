@@ -259,8 +259,8 @@
         </div>
         
         <div id="finalPhotoGallery" class="photo-gallery hidden">
-            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400" alt="Deniz 1"></div>
-            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400" alt="Deniz 2"></div>
+            <div class="photo-frame"><img src="deniz1.jpg" alt="Deniz 1"></div>
+            <div class="photo-frame"><img src="deniz2.jpg" alt="Deniz 2"></div>
         </div>
 
         <h1 id="rewardTitle">Bölüm Ödülü 🎉</h1>
@@ -271,9 +271,11 @@
     <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
 <script>
+    // Şifre Girişini Tetikleyen Kusursuz Fonksiyon
     function checkPassword() {
-        const input = document.getElementById('sitePass').value;
+        const input = document.getElementById('sitePass').value.trim();
         const errorArea = document.getElementById('errorArea');
+        
         if (input === "990009") {
             document.getElementById('passwordScreen').classList.add('hidden');
             document.getElementById('introScreen').classList.remove('hidden');
@@ -320,10 +322,12 @@
         clearInterval(chatInterval);
         chatInterval = setInterval(() => {
             const chatBox = document.getElementById('liveChat');
-            chatBox.innerHTML = "Hani yazıyor...";
-            setTimeout(() => {
-                chatBox.innerHTML = chatMessages[Math.floor(Math.random() * chatMessages.length)];
-            }, 1300);
+            if (chatBox) {
+                chatBox.innerHTML = "Hani yazıyor...";
+                setTimeout(() => {
+                    chatBox.innerHTML = chatMessages[Math.floor(Math.random() * chatMessages.length)];
+                }, 1300);
+            }
         }, 6000);
 
         initLevel();
@@ -388,4 +392,38 @@
         } else {
             document.getElementById('rewardTitle').innerHTML = `Bölüm ${currentLevel + 1} Ortak Zafer! ✨`;
             photoGallery.classList.add('hidden');
-            document.getElementById('
+            document.getElementById('nextLevelBtn').innerHTML = `${currentLevel + 2}. Odaya Geçiş İsteği Gönder ⚡`;
+        }
+        
+        document.getElementById('rewardText').innerHTML = levelRewards[currentLevel];
+    }
+
+    function startNextLevel() {
+        const music = document.getElementById('bgMusic');
+        if (music) music.play().catch(e => {});
+
+        if (currentLevel === 4) {
+            currentLevel = 0;
+        } else {
+            currentLevel++;
+        }
+        
+        document.getElementById('rewardScreen').classList.add('hidden');
+        document.getElementById('gameScreen').classList.remove('hidden');
+        initLevel();
+    }
+
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = ['💛', '💜', '✨', '👑'][Math.floor(Math.random() * 4)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => { heart.remove(); }, 6000);
+    }
+</script>
+</body>
+</html>
