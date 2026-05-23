@@ -115,12 +115,12 @@
 
     <div id="introScreen" class="container">
         <h1>Deniz'im... ❤️</h1>
-        <p>Senin için kalbimden gelen küçük bir yolculuk hazırladım hatunum. Sonuna kadar gitmeye hazır mısın?</p>
-        <button onclick="startStory()">Sürprizi Başlat karıcım ✨</button>
+        <p>Senin için kalbimden gelen küçük bir yolculuk hazırladım hatunum.</p>
+        <button onclick="startStory()">Giriş Yap karıcım ✨</button>
     </div>
 
     <div id="storyScreen" class="container hidden">
-        <h1 id="stageTitle">Aşama 1</h1>
+        <h1 id="stageTitle">Deniz'ime Not... ❤️</h1>
         <p id="stageText">Yazı buraya gelecek...</p>
         <div class="btn-group">
             <button id="btn1" onclick="nextStage(1)">Seçenek 1</button>
@@ -132,7 +132,6 @@
     <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" loop></audio>
 
     <script>
-        // 15 Aşamalı Özel Senaryo
         const storyStages = [
             {
                 text: "Hoş geldin yavrum. Bu ekrana baktığın an bil ki seni dünyadaki her şeyden çok düşünen biri var. İyi ki hayatımdasın karıcım. İlk adımı nasıl atmak istersin?",
@@ -190,5 +189,81 @@
                 b2: "Bana kural tanımaz bir iltifat et yavrum! 🔥"
             },
             {
-                text: "Sen bu evrenin en kusursuz, en büyüleyici kadınısın karıcım. Seninle olan
-        
+                text: "Sen bu evrenin en kusursuz, en büyüleyici kadınısın karıcım. Seninle olan her anım benim ömrüme ömür katıyor, beni hayata bağlıyor.",
+                b1: "Kalbimin tek sahibisin hatunum ❤️",
+                b2: "Sen yokken günlerim geçmek bilmiyor, üzülüyorum... tıkandım ⏳"
+            },
+            {
+                text: "Zaman sensiz çok yavaş akıyor yavrum, haklısın. Ama seni sevdikçe, senin hayalinle bile içimdeki o hüzün yerini derin bir sevdaya bırakıyor.",
+                b1: "Biz birbirimiz için yaratılmışız karıcım 🔐",
+                b2: "Sana olan aşkımı haykırmak istiyorum! 📣"
+            },
+            {
+                text: "Bağır sevgilim, tüm dünya duysun! Sen benim nefesim, sen benim geleceğim, sen benim ömrümün geri kalanımsın hatunum.",
+                b1: "Son adıma geçelim mi yavrum? 🥰",
+                b2: "Beni ne kadar çok sevdiğini son kez söyle... ❤️"
+            },
+            {
+                text: "<span class='highlight'>Seni her şeyden, herkesten çok seviyorum Deniz'im...</span> Sen benim hatunum, karıcım, hayatımın anlamısın. İyi ki benimsin, iyi ki seninleyim sevgilim. Bu hikaye hiç bitmeyecek... ❤️",
+                b1: "Seni Çok Seviyorum ❤️ (Başa Dön)",
+                b2: "Kalbim Tamamen Senin ✨ (Başa Dön)"
+            }
+        ];
+
+        let currentStage = 0;
+
+        function startStory() {
+            // Önce ekranı değiştiriyoruz, böylece tarayıcı kilitlenmiyor
+            document.getElementById('introScreen').classList.add('hidden');
+            document.getElementById('storyScreen').classList.remove('hidden');
+            
+            // Kalpleri ve ilk aşamayı yükle
+            setInterval(createHeart, 350);
+            updateStage();
+
+            // Müziği en son güvenli şekilde başlatmayı deniyoruz
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.play().catch(err => {
+                    console.log("Müzik için bir sonraki tıklama beklenecek.");
+                });
+            }
+        }
+
+        function updateStage() {
+            const stage = storyStages[currentStage];
+            document.getElementById('stageText').innerHTML = stage.text;
+            document.getElementById('btn1').innerHTML = stage.b1;
+            document.getElementById('btn2').innerHTML = stage.b2;
+            document.getElementById('progress').innerHTML = `${currentStage + 1} / 15`;
+        }
+
+        function nextStage(choice) {
+            // Müzik ilk ekranda çalmadıysa, butona ilk basışta kesin çalsın diye buraya da ekledik
+            const music = document.getElementById('bgMusic');
+            if (music) music.play().catch(e => {});
+
+            if (currentStage === storyStages.length - 1) {
+                currentStage = 0;
+                updateStage();
+                return;
+            }
+
+            currentStage++;
+            updateStage();
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️', '💖', '💝', '💕'][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, 8000);
+        }
+    </script>
+</body>
+</html>
