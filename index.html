@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deniz'ime Özel...</title>
+    <title>Deniz'in Aşk Macerası 🎮</title>
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; user-select: none; }
         body {
             margin: 0;
             padding: 0;
-            /* Deniz'in Sevdiği Renkler: Siyah ve Koyu Mor Gece Teması */
             background: linear-gradient(135deg, #09020d, #1b052a, #0b0a0c);
             font-family: 'Georgia', serif;
             display: flex;
@@ -17,264 +16,285 @@
             align-items: center;
             min-height: 100vh;
             overflow: hidden;
-            color: #f5f2f7; /* Açık Gri Yazı Rengi */
+            color: #f5f2f7;
         }
 
         .container {
             text-align: center;
-            padding: 40px 25px;
-            background: rgba(18, 12, 22, 0.85); /* Siyah-Mor Mat Panel */
+            padding: 30px 20px;
+            background: rgba(18, 12, 22, 0.9);
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(224, 180, 26, 0.15); /* Sarı Parlama */
+            box-shadow: 0 10px 40px rgba(224, 180, 26, 0.2);
             backdrop-filter: blur(15px);
-            max-width: 90%;
-            width: 450px;
+            max-width: 95%;
+            width: 440px;
             z-index: 10;
-            border: 2px solid #57525d; /* Gri Çerçeve */
-            transition: all 0.4s ease;
+            border: 2px solid #57525d;
+            position: relative;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #57525d;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            color: #8c8294;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         h1 {
-            font-size: 26px;
-            color: #e0b41a; /* Deniz'in Sevdiği Parlak Sarı */
-            margin-bottom: 25px;
+            font-size: 24px;
+            color: #e0b41a;
+            margin-bottom: 20px;
             text-shadow: 0 0 12px rgba(224, 180, 26, 0.4);
-            letter-spacing: 1px;
         }
 
         p {
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 35px;
-            color: #d1cbd6; /* Yumuşak Gri */
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: #d1cbd6;
         }
 
-        .highlight {
-            color: #e0b41a; /* Sarı Vurgu */
-            font-weight: bold;
-            font-size: 20px;
-            display: block;
-            margin: 15px 0;
-            text-shadow: 0 0 8px rgba(224, 180, 26, 0.3);
+        /* Oyun Alanı */
+        .game-area {
+            width: 100%;
+            height: 250px;
+            background: rgba(9, 2, 13, 0.6);
+            border: 1px dashed #e0b41a;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 25px;
         }
 
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        /* Tıklanacak Canavarlar */
+        .monster {
+            font-size: 35px;
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            animation: spawn 0.3s ease-out;
+        }
+        .monster:active {
+            transform: scale(0.8);
+        }
+
+        @keyframes spawn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         button {
-            /* Sarı ve Mor Geçişli Asil Buton Tasarımı */
             background: linear-gradient(45deg, #e0b41a, #bd9313);
-            color: #09020d; /* Buton içi koyu yazı */
+            color: #09020d;
             border: none;
-            padding: 16px 20px;
+            padding: 15px 25px;
             font-size: 16px;
             border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(224, 180, 26, 0.3);
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(224, 180, 26, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(224, 180, 26, 0.5);
         }
 
-        /* Hikaye Modu İkinci Yönlendirme Butonu (Koyu Mor/Gri) */
-        button.alt-btn {
-            background: linear-gradient(45deg, #372147, #241630);
+        .highlight {
             color: #e0b41a;
-            border: 1px solid #e0b41a;
-            box-shadow: 0 5px 15px rgba(55, 33, 71, 0.4);
-        }
-
-        button.alt-btn:hover {
-            box-shadow: 0 6px 25px rgba(224, 180, 26, 0.3);
-        }
-
-        .progress-bar {
-            font-size: 13px;
-            color: #8c8294; /* Gri Sayaç */
-            margin-top: 25px;
-            letter-spacing: 2px;
             font-weight: bold;
         }
 
-        /* Parlayan Sarı/Mor Yıldız ve Kalp Yağmuru */
+        /* Arka Plandaki Süs Kalpleri */
         .heart {
             position: absolute;
-            color: rgba(224, 180, 26, 0.4); /* Sarı Loş Kalpler */
+            color: rgba(224, 180, 26, 0.3);
             animation: floatUp linear forwards;
             z-index: 1;
-            user-select: none;
             pointer-events: none;
         }
 
         @keyframes floatUp {
             0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
             10% { opacity: 1; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) translateX(30px) scale(1.2); opacity: 0; }
+            100% { transform: translateY(-10vh) translateX(20px) scale(1.1); opacity: 0; }
         }
 
         .hidden { display: none !important; }
-        .fade-in { animation: fadeInEffect 0.4s ease-in; }
-        @keyframes fadeInEffect {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
     </style>
 </head>
 <body>
 
     <div id="introScreen" class="container">
-        <h1>Deniz'im... 💛</h1>
-        <p>Senin için kalbimden dökülen kelimelerle upuzun bir hikaye hazırladım hatunum.</p>
-        <button onclick="startStory()">Giriş Yap karıcım ✨</button>
+        <h1>Deniz'in Aşk Macerası 🎮</h1>
+        <p>Hatunum, senin için 15 bölümlük gerçek bir canavar avlama oyunu hazırladım. Ekranda beliren canavarlara tıklayarak onları yok etmeli ve her bölümü geçerek ödül iltifatlarını toplamalısın karıcım. Hazır mısın?</p>
+        <button onclick="startGame()">Oyunu Başlat Yavrum 🕹️</button>
     </div>
 
-    <div id="storyScreen" class="container hidden">
-        <h1 id="stageTitle">Deniz'ime... 💜</h1>
-        <p id="stageText">Yükleniyor yavrum...</p>
-        <div class="btn-group">
-            <button id="btn1" onclick="nextStage()">Devam Et Hatunum ✨</button>
-            <button id="btn2" class="alt-btn" onclick="nextStage()">Sonraki Sayfa Yavrum 👑</button>
+    <div id="gameScreen" class="container hidden">
+        <div class="game-header">
+            <span id="levelDisplay">BÖLÜM: 1 / 15</span>
+            <span id="scoreDisplay">HEDEF: 0 / 3</span>
         </div>
-        <div class="progress-bar" id="progress">Aşama: 1 / 15</div>
+        <h1>Canavarları Patlat! ⚔️</h1>
+        <p style="font-size: 14px; color: #8c8294; margin-bottom: 10px;">Ekranda kaçışan yaratıklara hızlıca dokun!</p>
+        
+        <div class="game-area" id="gameArea">
+            </div>
     </div>
+
+    <div id="rewardScreen" class="container hidden">
+        <div class="game-header">
+            <span style="color: #e0b41a;">BÖLÜM TAMAMLANDI! 🏆</span>
+            <span>CAN: ❤️❤️❤️</span>
+        </div>
+        <h1 id="rewardTitle">Bölüm Ödülü 🎉</h1>
+        <p id="rewardText">İltifat buraya gelecek...</p>
+        <button id="nextLevelBtn" onclick="startNextLevel()">Sonraki Bölüme Meydan Oku ⚔></button>
+    </div>
+
+    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
 <script>
-    // 15 Aşamalı Soru Sormayan, Tamamen Akıcı Oyunlaştırılmış Hikaye Seti
-    const storyStages = [
-        {
-            text: "Hoş geldin Deniz'im, benim canım hatunum. Bu ekrana baktığın her saniye seni ne kadar çok düşündüğümü, kalbimin sadece senin için attığını bilmeni istedim yavrum.",
-            b1: "Seni her şeyden çok seviyorum karıcım 💛",
-            b2: "Hikayemize devam et sevgilim ✨"
-        },
-        {
-            text: "Senin o tek bir gülüşün benim içimdeki tüm karanlığı, tüm hüzünleri yok etmeye yetiyor. Sen benim hayatımın en parlak sarı yıldızısın hatunum.",
-            b1: "Beni biraz daha mutlu et yavrum 😍",
-            b2: "Diğer sayfaya geçelim karıcım 💜"
-        },
-        {
-            text: "Uzak kaldığımızda, sesini biraz uzağımda hissedince içimde kocaman, hüzünlü bir boşluk kalıyor sevgilim. Tıkanıp kalıyorum, sensiz hiçbir şeyin tadı tuzu olmuyor.",
-            b1: "Söz veriyorum kalbini hep titreteceğim karıcım 💍",
-            b2: "O güzel gözlerini çok özledim hatunum 🌹"
-        },
-        {
-            text: "Dünyanın en güzel gözlerine sahip kadınısın sen. Sana her baktığımda, seninle geçen her anı düşündüğümde içimi apayrı, devasa bir huzur kaplıyor yavrum.",
-            b1: "Sensiz geçen saniyeler bile canımı yakıyor... 🖤",
-            b2: "Sen benim ömrüme ömür katan tek insansın karıcım 👑"
-        },
-        {
-            text: "Hatunum, sen yanımda yoksan ne oynadığım oyunların bir keyfi kalıyor ne de geçen saatlerin bir anlamı oluyor. Benim bütün hayat enerjim, neşem tamamen sensin.",
-            b1: "Seni asla ama asla bırakmayacağım karıcım ❤️",
-            b2: "Sen benim bu hayattaki tek güvenli sığınağımsın yavrum 🥰"
-        },
-        {
-            text: "O güzel karakterinle, o tertemiz kalbinle beni kendine her geçen gün daha da çok aşık ediyorsun karıcım. Sen benim bu dünyadaki başımın tacısın.",
-            b1: "Aramıza mesafeler girince kalbim acıyor... 🥺",
-            b2: "Sahip olduğum en değerli hazinesin hatunum 💎"
-        },
-        {
-            text: "Bazen içimi bir hüzün kaplasa da, o hüzün bile sana olan sevgimi, özlemimi daha da devleştiriyor hatunum. Aklımın her köşesi, her düşüncem tamamen seninle dolu.",
-            b1: "Biz seninle her zorluğun üstesinden geliriz yavrum 💪",
-            b2: "Dünyanın en tatlı, en güzel karısısın sen 🍯"
-        },
-        {
-            text: "O eşsiz tatlılığınla, bana olan o büyüleyici bakışınla kalbimi tamamen eritiyorsun sevgilim. Sen benim ömrümün geri kalanı, geleceğimsin.",
-            b1: "Seni herkesten ve her şeyden sakınırım hatunum 🛡️",
-            b2: "Sen yoksan her yer çok renksiz ve boş kalıyor... 😔"
-        },
-        {
-            text: "Sen olmayınca koskoca şehir üstüme geliyor sanki yavrum, nefesim daralıyor. Ama senin varlığını, senin o güzel yüzünü düşünmek bile bana dünyadaki en büyük gücü veriyor.",
-            b1: "Sonsuza kadar sadece seninleyim karıcım ♾️",
-            b2: "Gülüşünle ömrümü baştan aşağı güzelleştiriyorsun 🌟"
-        },
-        {
-            text: "<span class='highlight'>Ne olursa olsun sonsuza kadar sadece seninleyim karıcım!</span> Gökyüzündeki bütün yıldızlar bir araya gelse senin o kalbinin parıltısının yanında kapkaranlık kalır.",
-            b1: "Seni mutlu etmek benim hayattaki tek görevim 💘",
-            b2: "Senin tek bir damla hüznün için dünyayı yakarım hatunum 💔"
-        },
-        {
-            text: "Gözlerinden akacak tek bir damla hüzün için dünyayı ateşe veririm yavrum. Ben sadece senin yüzünü güldürmek, seni bu dünyadaki en mutlu kadın yapmak için varım.",
-            b1: "İyi ki benim hatunumsun, benim en büyük şansımsın 🍀",
-            b2: "Sen bu evrenin gördüğü en kusursuz kadınsın karıcım 🔥"
-        },
-        {
-            text: "Sen bu evrendeki en kusursuz, en büyüleyici detaysın benim için. Seninle geçen her bir saniye, ömrüme yepyeni bir ömür katıyor, beni hayata bağlıyor sevgilim.",
-            b1: "Zaman sensiz hiç akmıyor, tıkandığımı hissediyorum... ⏳",
-            b2: "Kalbimin tek ve gerçek sahibi sensin hatunum 💛"
-        },
-        {
-            text: "Haklısın hatunum, zaman sensiz hiç akmıyor, saniyeler geçmek bilmiyor, içim daralıyor. Ama seni sevdikçe, senin hayalinle bile o içimdeki tüm hüzünler uçup gidiyor.",
-            b1: "Biz seninle birbirimiz için yaratılmışız karıcım 🔐",
-            b2: "Sana olan aşkımı tüm dünyaya haykırabilirim yavrum 📣"
-        },
-        {
-            text: "Tüm dünya duysun ve bilsin; sen benim nefesim, sen benim geleceğim, sen benim ömrümün sonuna kadar tek aşkımsın canım hatunum.",
-            b1: "Seni her şeyden çok seviyorum Deniz'im... 🥰",
-            b2: "Son sayfaya geçelim karıcım, seni ne kadar çok sevdiğimi gör ❤️"
-        },
-        {
-            text: "<span class='highlight'>Seni her şeyden, herkesten çok seviyorum Deniz'im...</span> Sen benim yavrum, hatunum, karıcım, hayatımın tek anlamı ve gerçeğisin. İyi ki benimsin, iyi ki seninleyim sevgilim. Bu oyun, bu aşk hikayesi bizimle sonsuza kadar sürecek... 💛💜",
-            b1: "Seni Çok Seviyorum Hatunum 💛 (Başa Dön)",
-            b2: "Kalbimin Sahibi Karıcım 💜 (Başa Dön)"
-        }
+    // 15 Aşamalı Gerçek Oyun İltifatları Seti
+    const levelRewards = [
+        "1. Bölümü Temizledin Hatunum! İlk ödülün benden gelsin: Sen hayatıma girdiğin günden beri kalbimin tek sahibisin karıcım. Seninle başladığım bu hayat oyunu ömrümün sonuna kadar sürsün yavrum.",
+        "2. Bölüm Canavarları Da Kaçtı! Harikasın sevgilim. O tek bir tatlı gülüşün var ya, dünyadaki bütün galibiyetlerden çok daha değerli benim için. Sen benim gecemi aydınlatan tek yıldızımsın hatunum.",
+        "3. Bölümü Devirdin! Ama biliyor musun yavrum, sen uzağımda kalınca bu hayat oyunu bana o kadar zor geliyor ki... İçim daralıyor, sensiz her saniye tıkanıp kalıyorum, çok üzülüyorum sevgilim.",
+        "4. Bölüm Patonunu Ezdin Geçtin! Büyük Ödülün: Dünyanın en büyüleyici, en güzel gözlerine sahip kadını sensin karıcım. O gözlerine her baktığımda içimi apayrı devasa bir huzur kaplıyor hatunum.",
+        "5. Bölüm Bitti, Rekora Koşuyorsun! Karıcım sen yanımda yoksan ne oynadığım oyunların bir zevki kalıyor ne de günlerin bir tadı. Benim bütün hayat enerjim, neşem tamamen sensin yavrum.",
+        "6. Bölümün De Gizemini Çöptün! Sen o asil karakterinle, o tertemiz kalbinle beni kendine her geçen gün bin kat daha fazla aşık ediyorsun hatunum. Sen benim bu dünyadaki başımın tacısın.",
+        "7. Bölüm Kül Oldu! Aramızdaki mesafeler bazen canımı çok yakıyor, içimi büyük bir hüzün kaplıyor sevgilim ama sana olan aşkım o kadar büyük ki her türlü engeli yıkıp geçmeme yetiyor yavrum.",
+        "8. Bölüm Sınırı Kırıldı! Dünyanın en tatlı, en harika karısısın sen. O eşsiz tatlılığınla, bana olan o güzel bakışınla kalbimi tamamen eritiyorsun hatunum.",
+        "9. Bölüm Kalesini Fethettin! Sen olmayınca koskoca dünya üstüme yıkılıyor sanki karıcım, nefesim kesiliyor. Ama senin varlığını, sesini düşünmek bile bana dünyadaki en büyük gücü veriyor.",
+        "10. Özel Bölüm Tamamlandı! <span class='highlight'>Ne olursa olsun sonsuza kadar sadece seninleyim karıcım!</span> Gökyüzündeki bütün yıldızlar bir araya gelse senin kalbinin parıltısının yanında kapkaranlık kalır yavrum.",
+        "11. Bölüm Görevi Başarıyla Tamamlandı! Gözlerinden akacak tek bir damla hüzün için dünyayı ateşe veririm hatunum. Ben sadece senin yüzünü güldürmek, seni bu dünyadaki en mutlu kadın yapmak için varım.",
+        "12. Bölüm Labirentinden De Çıktın! Sen bu evrenin gördüğü en kusursuz, en büyüleyici detaysın karıcım. Seninle geçen her bir saniye, ömrüme yepyeni bir ömür katıyor sevgilim.",
+        "13. Bölüm Ejderhasını Avladın! Zaman sensiz hiç akmıyor yavrum, saniyeler geçmek bilmiyor, tıkanıyorum... Ama senin hayalinle bile o içimdeki tüm hüzünler uçup gidiyor, yerini sana olan aşkım alıyor.",
+        "14. Bölüm Son Kapıyı Açtın! Tüm dünya duysun ve bilsin; sen benim nefesim, sen benim geleceğim, sen benim ömrümün sonuna kadar tek aşkımsın canım hatunum. Final seni bekliyor!",
+        "🏆 MACERAYI KAZANDIN VE KALBİMİN TEK SAHİBİ OLDUN! <span class='highlight'>Seni her şeyden, herkesten çok seviyorum Deniz'im...</span> Sen benim yavrum, hatunum, karıcım, hayatımın tek anlamı ve gerçeğisin. Bu büyük aşk hikayesi bizimle sonsuza kadar sürecek... 💛💜"
     ];
 
-    let currentStage = 0;
+    let currentLevel = 0;
+    let currentScore = 0;
+    let targetScore = 3; // Her bölümde vurması gereken canavar sayısı
+    let gameLoopInterval;
+    const monstersPool = ['👾', '🐉', '👻', '👹', '🛸'];
 
-    function startStory() {
-        // Kilitlenmeyi önlemek için doğrudan ekran değiştiriyoruz
+    function startGame() {
         document.getElementById('introScreen').classList.add('hidden');
-        const storyScreen = document.getElementById('storyScreen');
-        storyScreen.classList.remove('hidden');
-        storyScreen.classList.add('fade-in');
+        document.getElementById('gameScreen').classList.remove('hidden');
         
-        setInterval(createHeart, 300);
-        updateStage();
+        setInterval(createHeart, 350);
+        
+        // Müziği oynat
+        const music = document.getElementById('bgMusic');
+        if (music) music.play().catch(e => {});
+
+        initLevel();
     }
 
-    function updateStage() {
-        const stage = storyStages[currentStage];
-        const screen = document.getElementById('storyScreen');
+    function initLevel() {
+        currentScore = 0;
+        // Bölümler ilerledikçe vurması gereken canavar sayısı tatlı bir şekilde artar
+        targetScore = 3 + Math.floor(currentLevel / 3); 
         
-        // Akıcı oyun geçiş efekti
-        screen.style.opacity = '0';
+        document.getElementById('levelDisplay').innerHTML = `BÖLÜM: ${currentLevel + 1} / 15`;
+        document.getElementById('scoreDisplay').innerHTML = `HEDEF: ${currentScore} / ${targetScore}`;
+        
+        // Eski canavarları temizle
+        document.getElementById('gameArea').innerHTML = '';
+        
+        // Canavar doğurma döngüsü (Seviye ilerledikçe hızlanır)
+        clearInterval(gameLoopInterval);
+        const spawnSpeed = Math.max(1000 - (currentLevel * 50), 400);
+        gameLoopInterval = setInterval(spawnMonster, spawnSpeed);
+        spawnMonster();
+    }
+
+    function spawnMonster() {
+        const gameArea = document.getElementById('gameArea');
+        if (currentScore >= targetScore) return;
+
+        const monster = document.createElement('div');
+        monster.classList.add('monster');
+        monster.innerHTML = monstersPool[Math.floor(Math.random() * monstersPool.length)];
+        
+        // Rastgele koordinatlar
+        const maxX = gameArea.clientWidth - 40;
+        const maxY = gameArea.clientHeight - 40;
+        monster.style.left = Math.random() * maxX + 'px';
+        monster.style.top = Math.random() * maxY + 'px';
+        
+        // Canavara tıklama olayı
+        monster.onclick = function() {
+            currentScore++;
+            document.getElementById('scoreDisplay').innerHTML = `HEDEF: ${currentScore} / ${targetScore}`;
+            monster.remove();
+            
+            if (currentScore >= targetScore) {
+                clearInterval(gameLoopInterval);
+                setTimeout(showReward, 400);
+            }
+        };
+
+        gameArea.appendChild(monster);
+
+        // Canavar belirli bir süre sonra vurulmazsa kaybolur ve yenisi gelir
         setTimeout(() => {
-            document.getElementById('stageText').innerHTML = stage.text;
-            document.getElementById('btn1').innerHTML = stage.b1;
-            document.getElementById('btn2').innerHTML = stage.b2;
-            document.getElementById('progress').innerHTML = `Aşama: ${currentStage + 1} / 15`;
-            screen.style.opacity = '1';
-        }, 150);
+            if (monster.parentNode) {
+                monster.remove();
+            }
+        }, 1500);
     }
 
-    function nextStage() {
-        if (currentStage === storyStages.length - 1) {
-            currentStage = 0;
-            updateStage();
-            return;
+    function showReward() {
+        document.getElementById('gameScreen').classList.add('hidden');
+        const rewardScreen = document.getElementById('rewardScreen');
+        rewardScreen.classList.remove('hidden');
+        
+        document.getElementById('rewardTitle').innerHTML = `Bölüm ${currentLevel + 1} Tamamlandı! ✨`;
+        document.getElementById('rewardText').innerHTML = levelRewards[currentLevel];
+        
+        if (currentLevel === levelRewards.length - 1) {
+            document.getElementById('nextLevelBtn').innerHTML = "Oyunu Baştan Oyna Karıcım 🎮";
+        } else {
+            document.getElementById('nextLevelBtn').innerHTML = `${currentLevel + 2}. Bölüm Canavarlarına Meydan Oku ⚔️`;
         }
-        currentStage++;
-        updateStage();
+    }
+
+    function startNextLevel() {
+        const music = document.getElementById('bgMusic');
+        if (music) music.play().catch(e => {});
+
+        if (currentLevel === levelRewards.length - 1) {
+            currentLevel = 0;
+        } else {
+            currentLevel++;
+        }
+        
+        document.getElementById('rewardScreen').classList.add('hidden');
+        document.getElementById('gameScreen').classList.remove('hidden');
+        initLevel();
     }
 
     function createHeart() {
         const heart = document.createElement('div');
         heart.classList.add('heart');
-        // Sarı ve mor karışık parlayan emojiler
         heart.innerHTML = ['💛', '💜', '✨', '👑'][Math.floor(Math.random() * 4)];
         heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
-        heart.style.fontSize = (Math.random() * 22 + 14) + 'px';
+        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
         document.body.appendChild(heart);
 
-        setTimeout(() => { heart.remove(); }, 7000);
+        setTimeout(() => { heart.remove(); }, 6000);
     }
 </script>
 </body>
