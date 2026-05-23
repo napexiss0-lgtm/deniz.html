@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #12030c, #2b0b1a, #0f0208);
+            background: linear-gradient(135deg, #0d0208, #200515, #070004);
             font-family: 'Georgia', serif;
             display: flex;
             justify-content: center;
@@ -22,19 +22,19 @@
         .container {
             text-align: center;
             padding: 35px 25px;
-            background: rgba(20, 5, 13, 0.75);
-            border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(255, 75, 92, 0.15);
+            background: rgba(15, 3, 10, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 75, 92, 0.2);
             backdrop-filter: blur(15px);
             max-width: 90%;
-            width: 480px;
+            width: 450px;
             z-index: 10;
-            border: 1px solid rgba(255, 101, 132, 0.2);
-            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 101, 132, 0.25);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         h1 {
-            font-size: 26px;
+            font-size: 24px;
             color: #ff6584;
             margin-bottom: 20px;
             text-shadow: 0 0 10px rgba(255, 101, 132, 0.4);
@@ -43,8 +43,9 @@
         p {
             font-size: 18px;
             line-height: 1.7;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             color: #ffe4e8;
+            transition: opacity 0.3s ease;
         }
 
         .highlight {
@@ -65,7 +66,7 @@
             background: linear-gradient(45deg, #ff4b5c, #ff6584);
             color: white;
             border: none;
-            padding: 14px 20px;
+            padding: 15px 20px;
             font-size: 16px;
             border-radius: 25px;
             cursor: pointer;
@@ -80,21 +81,21 @@
         }
 
         button.alt-btn {
-            background: linear-gradient(45deg, #4a1525, #6b2138);
-            border: 1px solid rgba(255, 101, 132, 0.3);
+            background: linear-gradient(45deg, #3d0c1b, #541326);
+            border: 1px solid rgba(255, 101, 132, 0.2);
         }
 
         .progress-bar {
             font-size: 13px;
             color: #a68590;
-            margin-top: 20px;
+            margin-top: 25px;
             letter-spacing: 1px;
         }
 
         /* Kalp Efekti */
         .heart {
             position: absolute;
-            color: rgba(255, 75, 92, 0.35);
+            color: rgba(255, 75, 92, 0.4);
             animation: floatUp linear forwards;
             z-index: 1;
             user-select: none;
@@ -109,19 +110,20 @@
         }
 
         .hidden { display: none !important; }
+        .fade-out { opacity: 0; }
     </style>
 </head>
 <body>
 
     <div id="introScreen" class="container">
         <h1>Deniz'im... ❤️</h1>
-        <p>Senin için kalbimden gelen küçük bir yolculuk hazırladım hatunum.</p>
+        <p>Senin için kalbimden dökülen kelimelerle küçük bir yolculuk hazırladım.</p>
         <button onclick="startStory()">Giriş Yap karıcım ✨</button>
     </div>
 
     <div id="storyScreen" class="container hidden">
-        <h1 id="stageTitle">Deniz'ime Not... ❤️</h1>
-        <p id="stageText">Yazı buraya gelecek...</p>
+        <h1 id="stageTitle">Deniz'ime... ❤️</h1>
+        <p id="stageText">Yazı yükleniyor...</p>
         <div class="btn-group">
             <button id="btn1" onclick="nextStage(1)">Seçenek 1</button>
             <button id="btn2" class="alt-btn" onclick="nextStage(2)">Seçenek 2</button>
@@ -129,141 +131,96 @@
         <div class="progress-bar" id="progress">1 / 15</div>
     </div>
 
-    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" loop></audio>
+    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
 
     <script>
+        // Roller düzeltildi: Yazılar Deniz'e hitap ediyor, butonlar senin ona kurduğun cümleler.
         const storyStages = [
             {
-                text: "Hoş geldin yavrum. Bu ekrana baktığın an bil ki seni dünyadaki her şeyden çok düşünen biri var. İyi ki hayatımdasın karıcım. İlk adımı nasıl atmak istersin?",
-                b1: "Seni çok özledim, hemen devam et ❤️",
-                b2: "Beni ne kadar çok seviyorsun göster bakalım 💖"
+                text: "Hoş geldin Deniz'im, benim canım hatunum. Bu ekrana baktığın her saniye seni ne kadar çok düşündüğümü bilmeni istedim.",
+                b1: "Seni her şeyden çok seviyorum karıcım ❤️",
+                b2: "Sen benim hayatımın şansısın yavrum ✨"
             },
             {
-                text: "Sen benim hayatıma girdiğin günden beri her günüm seninle güzelleşiyor hatunum. Senin o tek bir gülüşün benim bütün dünyamı aydınlatmaya yetiyor.",
-                b1: "Ben yokken çok üzülüyorsun ama biliyorum... 🥺",
-                b2: "Sen benim tek gerçeğimsin yavrum, hep gül 😍"
+                text: "Senin o tek bir gülüşün benim içimdeki tüm karanlığı yok etmeye yetiyor. Sen yanımdayken her şey daha anlamlı hatunum.",
+                b1: "Sen yoksan içim çok daralıyor, çok üzülüyorum... 😔",
+                b2: "Dünyanın en şanslı adamı benim çünkü sen varsın 😍"
             },
             {
-                text: "Haklısın... Sen yanımda olmayınca, sesini duymayınca içimde kocaman bir boşluk oluyor, çok üzülüyorum, nefes alamıyorum sanki sevgilim. Sen benim her şeyimsin.",
-                b1: "Kıyamam sana, üzülme kurban olduğum 🌹",
-                b2: "O zaman beni iltifatlara boğ karıcım! ✨"
+                text: "Gerçekten de öyle yavrum... Sen benim yanımda olmayınca, sesini uzağımda hissedince içimde kocaman hüzünlü bir boşluk kalıyor, tıkanıp kalıyorum.",
+                b1: "Söz veriyorum kalbini hep titreteceğim karıcım 💍",
+                b2: "Gözlerinin güzelliği aklımdan çıkmıyor hatunum 🌹"
             },
             {
-                text: "Dünyanın en güzel gözlerine sahip kadını... Sana bakmak, seni düşünmek bana bu hayattaki en büyük huzuru veriyor yavrum. Sen eşsiz bir detaysın.",
-                b1: "Sen benim kalbimin sahibisin hatunum 🥰",
-                b2: "Sensiz bir dakika bile eksik hissettiriyor... 😔"
+                text: "Dünyanın en güzel gözlerine sahip kadınısın sen. Sana her baktığımda, seni her düşündüğümde içimi apayrı bir huzur kaplıyor sevgilim.",
+                b1: "Sensiz geçen günler hiç geçmiyor, canım yanıyor... 🖤",
+                b2: "Sen benim ömrüme ömür katan tek insansın yavrum 👑"
             },
             {
-                text: "Sensiz geçen her saniye içimde buruk bir sızı kalıyor sevgilim. Sen benim hayatımın neşesisin, sen olmayınca ne oyunların tadı kalıyor ne de günlerin...",
-                b1: "Seni asla yalnız bırakmayacağım karıcım ❤️",
-                b2: "Bana biraz daha güzel sözler söyle yavrum 👑"
+                text: "Hatunum, sen yokken ne oynadığım oyunların bir keyfi kalıyor ne de geçen saatlerin. Hayatımın tüm neşesi tamamen sensin.",
+                b1: "Seni asla ama asla bırakmayacağım karıcım ❤️",
+                b2: "Sen benim bu hayattaki tek sığınağımsın yavrum 🥰"
             },
             {
-                text: "Sen benim bu hayatta başıma gelen en güzel şanssın hatunum. Karakterinle, o güzel kalbinle beni kendine her gün yeniden aşık ediyorsun.",
-                b1: "Sen benim ömrümsün karıcım, hep öyle kalacaksın 💍",
-                b2: "Uzak kaldığımızda kalbim acıyor, üzülüyorum... 🖤"
+                text: "Karakterinle, o temiz ve güzel kalbinle beni kendine her geçen gün daha da aşık ediyorsun karıcım. Sen benim başımın tacısın.",
+                b1: "Uzak kaldığımızda kalbimin acıdığını hissediyorum... 🥺",
+                b2: "Sen benim bu dünyada sahip olduğum en değerli şeysin 💎"
             },
             {
-                text: "Biliyorum yavrum, mesafeler canımızı yaksa da, kalbimin her atışında senin adın fısıldıyor. Seni düşünmeden geçen tek bir anım bile yok.",
-                b1: "Bu sevgi bize her zorluğu aşırır sevgilim 💪",
-                b2: "Dünyanın en tatlı karısı kimmiş bakalım? 🍯"
+                text: "Mesafeler bazen canımızı yaksa da, içimdeki o hüzün sana olan sevgimi daha da büyütüyor hatunum. Aklımın her köşesi seninle dolu.",
+                b1: "Biz her zorluğun üstesinden geliriz yavrum 💪",
+                b2: "Dünyanın en tatlı, en güzel karısısın sen 🍯"
             },
             {
-                text: "Tabii ki sensin hatunum! O tatlılığınla, bana olan bakışınla kalbimi eritiyorsun. Sen benim bu dünyadaki tek sığınağımsın yavrum.",
-                b1: "Seni herkesten, her şeyden sakınırım... 🛡️",
-                b2: "Sen yoksan her şey çok renksiz ve hüzünlü 😔"
+                text: "O tatlılığınla, bana olan o güzel bakışınla kalbimi tamamen eritiyorsun sevgilim. Sen benim ömrümün geri kalanısın.",
+                b1: "Seni herkesten ve her şeyden sakınırım hatunum 🛡️",
+                b2: "Sen yanımda olmayınca her yer çok hüzünlü ve renksiz... 😔"
             },
             {
-                text: "Sen yoksan sanki bütün şehir üstüme geliyor sevgilim, içim daralıyor. Senin varlığın bana öyle bir güç veriyor ki, sen benim dünyamsın.",
-                b1: "Sen benim başımın tacısın hatunum 👑",
-                b2: "Sonsuza kadar seninleyim karıcım diyebilir misin? ♾️"
+                text: "Sen olmayınca koskoca şehir üstüme geliyor sanki yavrum, içim daralıyor. Ama senin varlığını düşünmek bile bana dünyadaki en büyük gücü veriyor.",
+                b1: "Sonsuza kadar sadece seninleyim karıcım ♾️",
+                b2: "Gülüşünle ömrümü güzelleştiren tek kadınsın 🌟"
             },
             {
-                text: "<span class='highlight'>Sonsuza kadar sadece seninleyim karıcım!</span> Gökyüzündeki tüm yıldızları toplasam, senin kalbinin parıltısı kadar güzel olamazlar yavrum.",
-                b1: "Bunu duymak kalbimi eritti sevgilim... ✨",
-                b2: "Bazen seni düşünürken hüzünleniyorum, yanımda ol diye... 💔"
+                text: "Evet, ne olursa olsun sonsuza kadar sadece seninleyim karıcım! Gökyüzündeki bütün yıldızlar bir araya gelse senin parıltının yanında sönük kalır.",
+                b1: "Seni mutlu etmek benim bu hayattaki en büyük görevim 💘",
+                b2: "Sen ağlarsan benim de dünyam kararır hatunum... 💔"
             },
             {
-                text: "Gözlerinden akan tek bir damla hüzne dünyayı yakarım hatunum. Ben seni mutlu etmek için, senin yüzünü güldürmek için varım bu hayatta.",
-                b1: "İyi ki benim sevgilimsin, şansım benim 🍀",
-                b2: "Bana kural tanımaz bir iltifat et yavrum! 🔥"
+                text: "Senin gözlerinden akacak tek bir damla hüzün için dünyayı yakarım yavrum. Ben sadece senin yüzünü güldürmek, seni mutlu görmek istiyorum.",
+                b1: "İyi ki benim hatunumsun, benim şansımsın 🍀",
+                b2: "Sen bu evrenin en kusursuz kadınısın karıcım 🔥"
             },
             {
-                text: "Sen bu evrenin en kusursuz, en büyüleyici kadınısın karıcım. Seninle olan her anım benim ömrüme ömür katıyor, beni hayata bağlıyor.",
-                b1: "Kalbimin tek sahibisin hatunum ❤️",
-                b2: "Sen yokken günlerim geçmek bilmiyor, üzülüyorum... tıkandım ⏳"
+                text: "Sen bu evrendeki en kusursuz, en büyüleyici detaysın benim için. Seninle olan her an, ömrüme yepyeni bir ömür katıyor sevgilim.",
+                b1: "Zaman sensiz hiç akmıyor, tıkandığımı hissediyorum... ⏳",
+                b2: "Kalbimin tek ve gerçek sahibi sensin hatunum ❤️"
             },
             {
-                text: "Zaman sensiz çok yavaş akıyor yavrum, haklısın. Ama seni sevdikçe, senin hayalinle bile içimdeki o hüzün yerini derin bir sevdaya bırakıyor.",
-                b1: "Biz birbirimiz için yaratılmışız karıcım 🔐",
-                b2: "Sana olan aşkımı haykırmak istiyorum! 📣"
+                text: "Haklısın hatunum, zaman sensiz hiç akmıyor, saniyeler geçmek bilmiyor. Ama seni sevdikçe, senin hayalinle bile o içimdeki hüzün kaybolup gidiyor.",
+                b1: "Biz seninle birbirimiz için yaratılmışız karıcım 🔐",
+                b2: "Sana olan aşkımı tüm dünyaya haykırabilirim yavrum 📣"
             },
             {
-                text: "Bağır sevgilim, tüm dünya duysun! Sen benim nefesim, sen benim geleceğim, sen benim ömrümün geri kalanımsın hatunum.",
-                b1: "Son adıma geçelim mi yavrum? 🥰",
-                b2: "Beni ne kadar çok sevdiğini son kez söyle... ❤️"
+                text: "Tüm dünya duysun ve bilsin; sen benim nefesim, sen benim geleceğim, sen benim ömrümün geri kalanımsın hatunum.",
+                b1: "Seni her şeyden çok seviyorum Deniz'im... 🥰",
+                b2: "Beni ne kadar çok sevdiğini son kez gör karıcım ❤️"
             },
             {
-                text: "<span class='highlight'>Seni her şeyden, herkesten çok seviyorum Deniz'im...</span> Sen benim hatunum, karıcım, hayatımın anlamısın. İyi ki benimsin, iyi ki seninleyim sevgilim. Bu hikaye hiç bitmeyecek... ❤️",
-                b1: "Seni Çok Seviyorum ❤️ (Başa Dön)",
-                b2: "Kalbim Tamamen Senin ✨ (Başa Dön)"
+                text: "<span class='highlight'>Seni her şeyden, herkesten çok seviyorum Deniz'im...</span> Sen benim yavrum, hatunum, karıcım, hayatımın tek anlamısın. İyi ki benimsin, iyi ki seninleyim sevgilim. Bu hikaye bizimle sonsuza kadar sürecek... ❤️",
+                b1: "Seni Çok Seviyorum Hatunum ❤️ (Başa Dön)",
+                b2: "Kalbimin Sahibi Karıcım ✨ (Başa Dön)"
             }
         ];
 
         let currentStage = 0;
 
         function startStory() {
-            // Önce ekranı değiştiriyoruz, böylece tarayıcı kilitlenmiyor
             document.getElementById('introScreen').classList.add('hidden');
             document.getElementById('storyScreen').classList.remove('hidden');
             
-            // Kalpleri ve ilk aşamayı yükle
             setInterval(createHeart, 350);
             updateStage();
 
-            // Müziği en son güvenli şekilde başlatmayı deniyoruz
             const music = document.getElementById('bgMusic');
-            if (music) {
-                music.play().catch(err => {
-                    console.log("Müzik için bir sonraki tıklama beklenecek.");
-                });
-            }
-        }
-
-        function updateStage() {
-            const stage = storyStages[currentStage];
-            document.getElementById('stageText').innerHTML = stage.text;
-            document.getElementById('btn1').innerHTML = stage.b1;
-            document.getElementById('btn2').innerHTML = stage.b2;
-            document.getElementById('progress').innerHTML = `${currentStage + 1} / 15`;
-        }
-
-        function nextStage(choice) {
-            // Müzik ilk ekranda çalmadıysa, butona ilk basışta kesin çalsın diye buraya da ekledik
-            const music = document.getElementById('bgMusic');
-            if (music) music.play().catch(e => {});
-
-            if (currentStage === storyStages.length - 1) {
-                currentStage = 0;
-                updateStage();
-                return;
-            }
-
-            currentStage++;
-            updateStage();
-        }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = ['❤️', '💖', '💝', '💕'][Math.floor(Math.random() * 4)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => { heart.remove(); }, 8000);
-        }
-    </script>
-</body>
-</html>
+            if
